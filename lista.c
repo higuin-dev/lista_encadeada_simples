@@ -41,18 +41,53 @@ void Imprime(TipoLista Lista) {
 }
 
 void RetiraUltimo(TipoLista *Lista, TipoItem *Item) {
-    /* IMPLEMENTAR */
+    TipoApontador p = Lista->Primeiro;
+    if(Vazia(*Lista)){
+        return;
+    }
+    while(p->Prox != Lista->Ultimo){
+        p = p->Prox;
+    }
+    *Item = Lista->Ultimo->Item;
+    free(Lista->Ultimo);
+    Lista->Ultimo = p;
+    p->Prox = NULL;
 }
 
 void InsereInicio(TipoItem x, TipoLista *Lista) {
-    /* IMPLEMENTAR */
+    TipoApontador ins;
+    ins = (TipoApontador)malloc(sizeof(TipoCelula));
+    ins->Item = x;
+    ins->Prox = Lista->Primeiro->Prox;
+    Lista->Primeiro->Prox = ins;
+    if(Lista->Ultimo == Lista->Primeiro){
+        Lista->Ultimo = ins;
+    }
 }
 
 void Inverte(TipoLista *Lista) {
-    /* IMPLEMENTAR */
+    TipoApontador ant = NULL;
+    TipoApontador atual = Lista->Primeiro->Prox;
+    TipoApontador prox;
+    if(atual == NULL){
+        return;
+    }
+    Lista->Ultimo = atual;
+    while(atual != NULL){
+        prox = atual->Prox;
+        atual->Prox = ant;
+        ant = atual;
+        atual = prox;
+    }
+    Lista->Primeiro->Prox = ant;
 }
 
 int Tamanho(TipoLista *Lista) {
-    /* IMPLEMENTAR */
-    return XXX;
+    int tam = 0;
+    TipoApontador p = Lista->Primeiro->Prox;
+    while(p != NULL){
+        tam++;
+        p = p->Prox;
+    }
+    return tam;
 }
